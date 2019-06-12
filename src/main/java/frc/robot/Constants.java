@@ -34,4 +34,8 @@ public class Constants {
     public static final double kSteerP = 0;
     public static final double kSteerI = 0;
     public static final double kSteerD = 0;
+
+    public static final double kMaxTargetArea = 0;
+    public static final double kVisionTurnP = 0;
+    public static final double kVisionDriveP = 0;
 }

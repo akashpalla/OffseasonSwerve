@@ -15,7 +15,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
  */
 public class Limelight {
 
-    NetworkTable limelight;
+    private NetworkTable limelight;
 
     public static enum LED_MODE{
         ON, OFF, BLINKING;
@@ -30,8 +30,12 @@ public class Limelight {
 
     }
 
-    public double getAngle(){
+    public double getHorizontalOffset(){
         return limelight.getEntry("tx").getDouble(0.0);
+    }
+
+    public double getVerticalOffset(){
+        return limelight.getEntry("ty").getDouble(0.0);
     }
 
     public double getArea(){

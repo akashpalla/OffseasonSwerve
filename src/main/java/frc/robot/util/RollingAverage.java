@@ -7,26 +7,33 @@
 
 package frc.robot.util;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
-
+import java.util.ArrayList;
 
 /**
  * Add your docs here.
  */
-public class NavX {
+public class RollingAverage {
 
-    private AHRS navX;
-    public NavX(){
-        navX = new AHRS(SPI.Port.kMXP);
-        navX.zeroYaw();
+    private int size;
+    private double sum;
+    private double [] arr;
+
+    public RollingAverage(int _size){
+        size = _size;
+        arr = new double[size];
+        sum = 0;
     }
 
-    public void zeroYaw(){
-        navX.zeroYaw();
+    public void add(double x){
+        sum -= arr[0];
+        for(int i = 0; i < size-1; i++){
+            arr[i] = arr[i+1];
+        }
+        arr[size-1] = x;
+        sum+=x;
     }
 
-    public double getGyroAngle(){
-        return navX.getYaw();
+    public double getAverage(){
+        return sum/size;
     }
 }

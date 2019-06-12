@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Hardware;
 import frc.robot.commands.DriveWithJoystick;
+import frc.robot.util.Limelight;
 
 /**
  * Add your docs here.
@@ -24,9 +25,13 @@ public class Drivetrain extends Subsystem {
   private double kLengthComponent;
   private double kWidthComponent;
 
+  private Limelight limelight;
+
   Wheel frontLeft, frontRight, backLeft, backRight;
 
   public Drivetrain(){
+
+    limelight = new Limelight();
 
     frontLeft = new Wheel(Hardware.driveFrontLeft, Hardware.steerFrontLeft, Constants.kDriveFrontLeft, Constants.kSteerFrontLeft);
     frontRight = new Wheel(Hardware.driveFrontRight, Hardware.steerFrontRight, Constants.kDriveFrontRight, Constants.kSteerFrontRight);
@@ -76,6 +81,21 @@ public class Drivetrain extends Subsystem {
     frontRight.swerveDrive(ws[1], wa[1]);
     backLeft.swerveDrive(ws[2], wa[2]);
     backRight.swerveDrive(ws[3], wa[3]);
+  }
+
+
+  public void alignWithTarget(){
+    
+    if(limelight.hasTarget())
+    {
+      double angle = limelight.getHorizontalOffset();
+      double throttle = (Constants.kMaxTargetArea - limelight.getArea());
+
+      double leftOutput = throttle * Constants.kVisionDriveP + angle* Constants.kVisionTurnP;
+      double rightOutput = throttle * Constants.kVisionDriveP - angle* Constants.kVisionTurnP;
+
+      //drive(leftOutput, rightOutput)    
+    }
   }
 
 

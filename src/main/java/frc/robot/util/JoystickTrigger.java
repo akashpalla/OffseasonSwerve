@@ -7,26 +7,31 @@
 
 package frc.robot.util;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
-
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 
 /**
  * Add your docs here.
  */
-public class NavX {
+public class JoystickTrigger extends Trigger{
 
-    private AHRS navX;
-    public NavX(){
-        navX = new AHRS(SPI.Port.kMXP);
-        navX.zeroYaw();
+    private  Joystick joystick;
+    private int axis;
+
+    public JoystickTrigger(Joystick joystick, int axis) {
+        super();
+        this.joystick = joystick;
+        this.axis = axis;
     }
 
-    public void zeroYaw(){
-        navX.zeroYaw();
+
+    public boolean get() {
+        double value = joystick.getRawAxis(axis); 
+        
+        if(value > 0.3) 
+            return true;
+        else
+         return false;
     }
 
-    public double getGyroAngle(){
-        return navX.getYaw();
-    }
 }
